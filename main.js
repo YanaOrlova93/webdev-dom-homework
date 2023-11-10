@@ -211,4 +211,6 @@ function sendCommentToServer(comment) {
 
 
 
+
+
 console.log("It works!");
