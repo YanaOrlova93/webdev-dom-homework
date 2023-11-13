@@ -2,71 +2,55 @@ import { getTodos, postTodo } from "./api.js";
 import { answerComments, attachLikeHandler } from "./eventListeners.js";
 import { renderComments } from "./renderMain.js";
 
+export let commentsData = [];
+function setComments(newComments) {
+commentsData = newComments;
+}
+export let token = "";
+function setToken(newToken) {
+token = newToken;
+}
+function getToken() {
+    return `Bearer ${token}`
+   
+    }
+    
+ 
 const nameInputElement = document.getElementById("name-input");
 const commInputElement = document.getElementById("comm-input");
 const buttonElement = document.getElementById("publish-button");
 
 
-const loaderComment = document.getElementById("loader-comment");
+
 const addLoaderComment = document.getElementById("add-loader-comment");
 
 const addForm = document.getElementById("id-form");
 
 
-addLoaderComment.style.display = "none";
+// addLoaderComment.style.display = "none";
 
 
 
-buttonElement.addEventListener("click", () => {
-commInputElement.style.backgroundColor = "";
-nameInputElement.style.backgroundColor = "";
-if (commInputElement.value === "" || nameInputElement.value === "") {
-    commInputElement.style.backgroundColor = "red";
-    nameInputElement.style.backgroundColor = "red";
+// buttonElement.addEventListener("click", () => {
+// commInputElement.style.backgroundColor = "";
+// nameInputElement.style.backgroundColor = "";
+// if (commInputElement.value === "" || nameInputElement.value === "") {
+//     commInputElement.style.backgroundColor = "red";
+//     nameInputElement.style.backgroundColor = "red";
 
-    return;
-}
-sendCommentToServer()
-addForm.style.display = "none";
-addLoaderComment.style.display = "block";
-
-
-})
-
-
-// function renderComments() {
-//     const allCommentsHtml = commentsData.map((comment, index) => {
-//         return `<li class="comment">
-//         <div class="comment-header">
-//            <div>${comment.name}</div>
-//             <div id="comment-date-1">${comment.date}</div>
-//         </div>
-//         <div class="comment-body">
-//             <div class="comment-text">
-//                 ${comment.text}
-//             </div>
-//         </div>
-//         <div class="comment-footer">
-//             <div class="likes">
-//                 <span class="likes-counter">${comment.likes}</span>
-//                 <button class="like-button"></button>
-//             </div>
-//         </div>
-//     </li>`
-//     }).join("")
-//     listElement.innerHTML = allCommentsHtml;
-
-//     const likeButtons = document.querySelectorAll(".like-button");
-//     const likeCounts = document.querySelectorAll(".likes-counter");
-//     likeButtons.forEach((button, index) => {
-//     attachLikeHandler(button, likeCounts[index]);
-//     answerComments();
-// });
-
+//     return;
 // }
+// sendCommentToServer()
+// addForm.style.display = "none";
+// addLoaderComment.style.display = "block";
 
 
-export let commentsData = [];
+// })
+
+
+
+
+
 
 
 function getCommentsFromServer() {
@@ -88,6 +72,7 @@ console.log(appComments)
     renderComments();
 })
     .then((dataResponse) => {
+        const loaderComment = document.getElementById("loader-comment");
         console.log("data",dataResponse);
         loaderComment.style.display = "none";
     })

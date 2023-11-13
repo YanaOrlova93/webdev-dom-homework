@@ -1,8 +1,15 @@
+const host = "https://wedev-api.sky.pro/api/v1/yana-orlova/comments";
+const userHost = "https://wedev-api.sky.pro/api/user/login";
+const userHostReg =  "https://wedev-api.sky.pro/api/user";
+export let token;
+export const setToken = (newToken) => {
+    token = newToken;
+}
 
 
 export function getTodos() {
 
-return fetch("https://wedev-api.sky.pro/api/v1/yana-orlova/comments", {
+return fetch(host, {
     method: "GET",
 })
 .then((response) => {
@@ -15,7 +22,7 @@ return fetch("https://wedev-api.sky.pro/api/v1/yana-orlova/comments", {
 }
 
 export function postTodo(postData) {
-return fetch("https://wedev-api.sky.pro/api/v1/yana-orlova/comments", {
+return fetch(host, {
         method: "POST",
         body: JSON.stringify(
             postData
@@ -33,4 +40,49 @@ return fetch("https://wedev-api.sky.pro/api/v1/yana-orlova/comments", {
             return response.json();
     
     });
+}
+
+export function loginAvtorization({ login, password }) {
+    return fetch(userHost, {
+        method: "POST",
+        body: JSON.stringify({
+            login,
+            password,
+        }),
+    })
+    
+        .then((response) => {
+            if (response.status === 500) {
+                throw new Error('Сервер упал');
+            }
+            if (response.status === 400) {
+                throw new Error('Неверные данные ввода');
+            }
+            if (response.status === 201) {
+                return response.json();
+            }
+        });
+}
+
+export function userRegistration({ login, name, password }) {
+    return fetch(userHostReg, {
+        method: "POST",
+        body: JSON.stringify({
+            name,
+            login,
+            password,
+        }),
+    })
+    .then((response) => {
+        if (response.status === 500) {
+            throw new Error('Сервер упал');
+        }
+        if (response.status === 400) {
+            throw new Error('Неверные данные ввода');
+        }
+        if (response.status === 201) {
+            return response.json();
+        }
+
+    })
 }
