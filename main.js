@@ -1,8 +1,10 @@
 import { getTodos, postTodo } from "./api.js";
 import { answerComments, attachLikeHandler } from "./eventListeners.js";
 import { renderComments } from "./renderMain.js";
+import { addCommentValidation } from "./validation.js";
 
 export let commentsData = [];
+
 function setComments(newComments) {
 commentsData = newComments;
 }
@@ -16,15 +18,11 @@ function getToken() {
     }
     
     
-const nameInputElement = document.getElementById("name-input");
-const commInputElement = document.getElementById("comm-input");
-const buttonElement = document.getElementById("publish-button");
-
-
-
-const addLoaderComment = document.getElementById("add-loader-comment");
-
-const addForm = document.getElementById("id-form");
+// const nameInputElement = document.getElementById("name-input");
+// const commInputElement = document.getElementById("comm-input");
+// const buttonElement = document.getElementById("publish-button");
+// const addLoaderComment = document.getElementById("add-loader-comment");
+// const addForm = document.getElementById("id-form");
 
 
 // addLoaderComment.style.display = "none";
@@ -86,14 +84,40 @@ console.log(appComments)
 // Вызываем getCommentsFromServer для загрузки комментариев при загрузке страницы
 getCommentsFromServer();
 
+export const addComment = () => {
+const nameInputElement = document.getElementById("name-input");
+const commInputElement = document.getElementById("comm-input");
+const buttonElement = document.getElementById("publish-button");
+const addLoaderComment = document.getElementById("add-loader-comment");
+const addForm = document.getElementById("id-form");
 
-function sendCommentToServer(comment) {
-    const postData = {
-        name: nameInputElement.value,
-        text: commInputElement.value,
-        forceError: true,
+addCommentValidation();
+commentsData.push({
+    name: nameInputElement.value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;"),
+    comment: commInputElement.value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;"),
+    likes: 0,
+  });
+  
+  blockWithForms.classList.add('hidden');
+  addForm.textContent = "Добавляем комментарий...";
 
-    };
+
+
+// function sendCommentToServer(comment) {
+//     const postData = {
+//         name: nameInputElement.value,
+//         text: commInputElement.value,
+//         forceError: true,
+
+//     };
 
     postTodo({
         name: nameInputElement.value,
@@ -107,25 +131,42 @@ function sendCommentToServer(comment) {
        getCommentsFromServer()
         console.log("Comment sent successfully:");
     })
+    .then(() => {
+        blockWithForms.classList.remove('hidden');
+        addForm.textContent = "";
+        nameInputElement.value = "";
+       commInputElement.value = "";
+      })
+  
+
+//         .catch((error) => {
+//             if (error.message === 'Failed to fetch') {
+//                 alert ('У вас неполадки с интернетом');
+//             }
+//             else {
+//                 alert(error.message);
+//             }
         
-
-        .catch((error) => {
-            if (error.message === 'Failed to fetch') {
-                alert ('У вас неполадки с интернетом');
-            }
-            else {
-                alert(error.message);
-            }
+//         console.error("Fetch error:", error);
         
-        console.error("Fetch error:", error);
-        
-    }).finally(() => {
-        addLoaderComment.style.display = "none";
-        addForm.style.display = "flex";
+//     }).finally(() => {
+//         addLoaderComment.style.display = "none";
+//         addForm.style.display = "flex";
 
 
-    })
-}
+//     })
+// }
+.catch((error) => {
+    blockWithForms.classList.remove('hidden');
+    formInput.textContent = "";
+    console.warn(error);
+  });
+};
 
+export const pressEnter = (event) => {
+    if (event.code === "Enter") {
+      addComment();
+    }
+  };
 
 console.log("It works!");

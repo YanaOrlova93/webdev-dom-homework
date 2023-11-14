@@ -1,7 +1,8 @@
 import { token } from "./api.js";
 import { answerComments, attachLikeHandler } from "./eventListeners.js";
+import { addComment, pressEnter } from "./main.js";
 import { renderLogin } from "./renderLogin.js";
-
+import { buttonDisabled } from "./validation.js";
 
 export function renderComments({commentsData}) {
     
@@ -61,33 +62,44 @@ export function renderComments({commentsData}) {
 
     appElement.innerHTML = appHtml;
 
-   const buttonLogin = document.querySelector(".avtorization-button");
-   buttonLogin.addEventListener('click', () => renderLogin({ renderLogin }));
-    const listElement = document.getElementById("list");
-    listElement.innerHTML = allCommentsHtml;
-    const likeButtons = document.querySelectorAll(".like-button");
-    const likeCounts = document.querySelectorAll(".likes-counter");
-    likeButtons.forEach((button, index) => {
-    attachLikeHandler(button, likeCounts[index]);
-    answerComments();
+   
+    // const listElement = document.getElementById("list");
+    // listElement.innerHTML = allCommentsHtml;
+    // const likeButtons = document.querySelectorAll(".like-button");
+    // const likeCounts = document.querySelectorAll(".likes-counter");
+    // likeButtons.forEach((button, index) => {
+    // attachLikeHandler(button, likeCounts[index]);
+    // answerComments();
+    // const buttonLogin = document.querySelector(".avtorization-button");
 
 
-//     token ? blockAuthorization.classList.add('hidden') : blockWithForms.classList.add('hidden');
-//     nameInputElement.value = window.localStorage.getItem("userName");
-//     nameInputElement.disabled = true;
+    const nameInputElement = document.getElementById("name-input");
+const commInputElement = document.getElementById("comm-input");
+const buttonElement = document.getElementById("publish-button");
+// const addLoaderComment = document.getElementById("add-loader-comment");
+const blockWithForms = document.querySelector(".add-form");
+  const buttonLogin = document.querySelector(".avtorization-button");
+
+const blockAuthorization = document.querySelector(".avtorization");
+
+
+    token ? blockAuthorization.classList.add('hidden') : blockWithForms.classList.add('hidden');
+    nameInputElement.value = window.localStorage.getItem("userName");
+    nameInputElement.disabled = true;
   
-//     buttonLogin.addEventListener('click', () => renderLogin({ renderComments }));
-//     nameInputElement.addEventListener("input", buttonDisabled);
-//     textAreaElement.addEventListener("input", buttonDisabled);
-//     buttonElement.addEventListener("click", addComment);
-//     blockWithForms.addEventListener("keyup", pressEnter);
+    buttonLogin.addEventListener('click', () => renderLogin({ renderComments }));
+    nameInputElement.addEventListener("input", buttonDisabled);
+    commInputElement.addEventListener("input", buttonDisabled);
+    buttonElement.addEventListener("click", addComment);
+    blockWithForms.addEventListener("keyup", pressEnter);
   
-//     const likesBlock = document.querySelector(".likes")
-//     token ? initEventlikes() : likesBlock;
+    const likesBlock = document.querySelector(".likes")
+    token ? attachLikeHandler() : likesBlock;
   
-//     reply();
-//     buttonDisabled();
+    reply();
+buttonDisabled();
     
-});
+};
 
-}
+
+
