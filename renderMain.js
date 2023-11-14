@@ -96,7 +96,7 @@ const blockAuthorization = document.querySelector(".avtorization");
     const likesBlock = document.querySelector(".likes")
     token ? attachLikeHandler() : likesBlock;
   
-    reply();
+    
 buttonDisabled();
     
 };

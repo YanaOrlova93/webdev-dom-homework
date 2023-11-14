@@ -92,6 +92,7 @@ const addLoaderComment = document.getElementById("add-loader-comment");
 const addForm = document.getElementById("id-form");
 
 addCommentValidation();
+
 commentsData.push({
     name: nameInputElement.value
       .replaceAll("&", "&amp;")
