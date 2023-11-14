@@ -90,7 +90,7 @@ const commInputElement = document.getElementById("comm-input");
 const buttonElement = document.getElementById("publish-button");
 const addLoaderComment = document.getElementById("add-loader-comment");
 const addForm = document.getElementById("id-form");
-
+const blockWithForms = document.querySelector(".add-form");
 addCommentValidation();
 
 commentsData.push({

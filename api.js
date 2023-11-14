@@ -78,6 +78,8 @@ export function loginAvtorization({ login, password }) {
             }
             if (response.status === 201) {
                 return response.json();
+
+                
             }
         });
 }

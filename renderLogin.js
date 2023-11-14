@@ -33,6 +33,7 @@ buttonElementLogin.addEventListener("click", () => {
         .then((responseData) => {
             setToken(responseData.user.token);
             window.localStorage.setItem("userName",responseData.user.login);
+            return responseData;
         })
         .then (() => {
             renderComments({commentsData});

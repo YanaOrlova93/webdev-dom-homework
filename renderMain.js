@@ -76,10 +76,17 @@ export function renderComments({commentsData}) {
     const nameInputElement = document.getElementById("name-input");
 const commInputElement = document.getElementById("comm-input");
 const buttonElement = document.getElementById("publish-button");
+
+// const likeButtons = document.querySelectorAll(".like-button");
+// const likeCounts = document.querySelectorAll(".likes-counter");
+// likeButtons.forEach((button, index) => {
+//   attachLikeHandler(button, likeCounts[index]);
+// });
+
+
 // const addLoaderComment = document.getElementById("add-loader-comment");
 const blockWithForms = document.querySelector(".add-form");
-  const buttonLogin = document.querySelector(".avtorization-button");
-
+const buttonLogin = document.querySelector(".avtorization-button");
 const blockAuthorization = document.querySelector(".avtorization");
 
 
@@ -94,7 +101,7 @@ const blockAuthorization = document.querySelector(".avtorization");
     blockWithForms.addEventListener("keyup", pressEnter);
   
     const likesBlock = document.querySelector(".likes")
-    token ? attachLikeHandler() : likesBlock;
+    // token ? attachLikeHandler() : likesBlock;
   
     
 buttonDisabled();
