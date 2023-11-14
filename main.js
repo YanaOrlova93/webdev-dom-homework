@@ -15,7 +15,7 @@ function getToken() {
    
     }
     
- 
+    
 const nameInputElement = document.getElementById("name-input");
 const commInputElement = document.getElementById("comm-input");
 const buttonElement = document.getElementById("publish-button");
@@ -49,11 +49,7 @@ const addForm = document.getElementById("id-form");
 
 
 
-
-
-
-
-function getCommentsFromServer() {
+export function getCommentsFromServer() {
 
 getTodos().then((responseData) => {
     console.log(responseData)
@@ -69,7 +65,7 @@ getTodos().then((responseData) => {
 
 console.log(appComments)
     commentsData = appComments;
-    renderComments();
+    renderComments({commentsData});
 })
     .then((dataResponse) => {
         const loaderComment = document.getElementById("loader-comment");

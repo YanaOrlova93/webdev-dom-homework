@@ -1,9 +1,10 @@
 
-import { loginAvtorization } from "./api.js";
+import { loginAvtorization, setToken } from "./api.js";
+import { commentsData} from "./main.js";
 import { renderRegistration } from "./registrationForm.js";
 
 
-export const renderLogin = ({renderMain}) => {
+export const renderLogin = ({renderComments}) => {
     let appElement = document.getElementById('app');
     let loginHtml = `<div class="container">
     <div class="add-form">
@@ -34,7 +35,7 @@ buttonElementLogin.addEventListener("click", () => {
             window.localStorage.setItem("userName",responseData.user.login);
         })
         .then (() => {
-            renderLogin({commentsArr});
+            renderComments({commentsData});
         })
         .catch((error) => {
             console.warn(error);

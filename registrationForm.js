@@ -1,3 +1,9 @@
+import { userRegistration, setToken } from "./api.js"
+import { commentsData} from "./main.js";
+import { renderLogin } from "./renderLogin.js";
+
+import { renderComments } from "./renderMain.js";
+
 export const renderRegistration = () => {
     const appElement = document.getElementById("app");
     const loginHtmlRegistr = `<div class="container">
@@ -15,7 +21,7 @@ export const renderRegistration = () => {
     appElement.innerHTML = loginHtmlRegistr;
     
     const buttonRegister = document.querySelector(".line_login-page")
-    buttonRegister.addEventListener('click', () => renderLogin({ renderList }));
+    buttonRegister.addEventListener('click', () => renderLogin({ renderComments }));
 
     const buttonElementLogin = document.getElementById('authorization-form-registration');
     const loginInputElement = document.getElementById('login-name-input-registration');
@@ -34,7 +40,7 @@ export const renderRegistration = () => {
             })
             
             .then(() => {
-                renderList({ commentsArr });
+                renderComments({commentsData});
             })  
             .catch((error) => {
                 console.warn(error);

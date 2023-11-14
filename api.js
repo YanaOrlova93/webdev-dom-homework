@@ -11,23 +11,33 @@ export function getTodos() {
 
 return fetch(host, {
     method: "GET",
+    headers: {
+        Authorization: `Bearer ${token}`,
+    },
 })
+
 .then((response) => {
-    if (response.status === 500) {
-            //код который обработает ошибку
-            throw new Error('Сервер упал');
-        } 
     return response.json();
+})
+.catch((error) => {
+    if (error.message === 'Failed to fetch') {
+        throw new Error("нет интернета");
+    }
+    console.warn(error);
 });
 }
 
 export function postTodo(postData) {
 return fetch(host, {
         method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(
             postData
             ),
     })
+
     .then((response) => {
         if (response.status === 500) {
             //код который обработает ошибку
@@ -37,9 +47,17 @@ return fetch(host, {
             //код который обработает ошибку
             throw new Error('Неверные данные ввода');
         } 
-            return response.json();
-    
-    });
+        if (response.status === 201) {
+                return response.json();
+            }
+        })
+        .catch((error) => {
+            if (error.message === 'Failed to fetch') {
+                throw new Error("нет интернета");
+            }
+            console.warn(error);
+        });
+
 }
 
 export function loginAvtorization({ login, password }) {

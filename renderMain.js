@@ -1,10 +1,10 @@
+import { token } from "./api.js";
 import { answerComments, attachLikeHandler } from "./eventListeners.js";
-import { commentsData } from "./main.js";
 import { renderLogin } from "./renderLogin.js";
 
 
-export function renderComments() {
-    const appHtml = document.getElementById('app');
+export function renderComments({commentsData}) {
+    
     
     const allCommentsHtml = commentsData.map((comment, index) => {
         return `<li class="comment">
@@ -24,9 +24,13 @@ export function renderComments() {
             </div>
         </div>
     </li>`
-    }).join("")
+    }).join("");
 
-    appHtml.innerHTML = `
+
+    const appElement = document.getElementById("app");
+
+
+    const appHtml =  `
     <div id="loader-comment">Комментарии загружаются...</div>
      <ul id="list" class="comments">
       ${allCommentsHtml}
@@ -55,18 +59,35 @@ export function renderComments() {
     <div class="input-form"></div>
     `
 
-   
+    appElement.innerHTML = appHtml;
+
    const buttonLogin = document.querySelector(".avtorization-button");
    buttonLogin.addEventListener('click', () => renderLogin({ renderLogin }));
-    
     const listElement = document.getElementById("list");
     listElement.innerHTML = allCommentsHtml;
-
     const likeButtons = document.querySelectorAll(".like-button");
     const likeCounts = document.querySelectorAll(".likes-counter");
     likeButtons.forEach((button, index) => {
     attachLikeHandler(button, likeCounts[index]);
     answerComments();
+
+
+//     token ? blockAuthorization.classList.add('hidden') : blockWithForms.classList.add('hidden');
+//     nameInputElement.value = window.localStorage.getItem("userName");
+//     nameInputElement.disabled = true;
+  
+//     buttonLogin.addEventListener('click', () => renderLogin({ renderComments }));
+//     nameInputElement.addEventListener("input", buttonDisabled);
+//     textAreaElement.addEventListener("input", buttonDisabled);
+//     buttonElement.addEventListener("click", addComment);
+//     blockWithForms.addEventListener("keyup", pressEnter);
+  
+//     const likesBlock = document.querySelector(".likes")
+//     token ? initEventlikes() : likesBlock;
+  
+//     reply();
+//     buttonDisabled();
+    
 });
 
 }
