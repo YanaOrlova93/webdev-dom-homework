@@ -1,4 +1,4 @@
-import { token } from "./api.js";
+import { getToken} from "./api.js";
 import { answerComments, attachLikeHandler } from "./eventListeners.js";
 import { addComment, pressEnter } from "./main.js";
 import { renderLogin } from "./renderLogin.js";
@@ -38,7 +38,8 @@ export function renderComments({commentsData}) {
     </ul>
     <div id="add-loader-comment">Комментарий добавляется...</div>
 
-    <div class="add-form" id="id-form">
+
+    ${getToken() && `<div class="add-form" id="id-form">
         <input
                 type="text" id="name-input"
                 class="add-form-name"
@@ -53,10 +54,10 @@ export function renderComments({commentsData}) {
         <div class="add-form-row">
             <button id="publish-button" class="add-form-button">Написать</button>
         </div>
-    </div> 
-    <div class="avtorization">
+    </div>` }
+    ${!getToken() && `<div class="avtorization">
           <p class="avtorization-text">Чтобы добавить комментарий, <a class="avtorization-button" href="#">Авторизуйтесь</a></p>
-        </div>
+        </div> `} 
     <div class="input-form"></div>
     `
 
@@ -73,9 +74,7 @@ export function renderComments({commentsData}) {
     // const buttonLogin = document.querySelector(".avtorization-button");
 
 
-    const nameInputElement = document.getElementById("name-input");
-const commInputElement = document.getElementById("comm-input");
-const buttonElement = document.getElementById("publish-button");
+    
 
 // const likeButtons = document.querySelectorAll(".like-button");
 // const likeCounts = document.querySelectorAll(".likes-counter");
@@ -85,26 +84,38 @@ const buttonElement = document.getElementById("publish-button");
 
 
 // const addLoaderComment = document.getElementById("add-loader-comment");
-const blockWithForms = document.querySelector(".add-form");
-const buttonLogin = document.querySelector(".avtorization-button");
-const blockAuthorization = document.querySelector(".avtorization");
+// const blockWithForms = document.querySelector(".add-form");
+
+// const blockAuthorization = document.querySelector(".avtorization");
 
 
-    token ? blockAuthorization.classList.add('hidden') : blockWithForms.classList.add('hidden');
-    nameInputElement.value = window.localStorage.getItem("userName");
-    nameInputElement.disabled = true;
+    // getToken() ? blockAuthorization.classList.add('hidden') : blockWithForms.classList.add('hidden');
+    
+    if (!getToken() ) {
+        const buttonLogin = document.querySelector(".avtorization-button");
+        buttonLogin.addEventListener('click', () => renderLogin({ renderComments }));
+    }
+    else {
+        const nameInputElement = document.getElementById("name-input");
+        const commInputElement = document.getElementById("comm-input");
+        const buttonElement = document.getElementById("publish-button");
+        nameInputElement.addEventListener("input", buttonDisabled);
+        commInputElement.addEventListener("input", buttonDisabled);
+        buttonElement.addEventListener("click", addComment);
+        blockWithForms.addEventListener("keyup", pressEnter);
+        nameInputElement.value = window.localStorage.getItem("userName");
+        nameInputElement.disabled = true;
+        buttonDisabled();
+
+    }
+
+    
   
-    buttonLogin.addEventListener('click', () => renderLogin({ renderComments }));
-    nameInputElement.addEventListener("input", buttonDisabled);
-    commInputElement.addEventListener("input", buttonDisabled);
-    buttonElement.addEventListener("click", addComment);
-    blockWithForms.addEventListener("keyup", pressEnter);
-  
-    const likesBlock = document.querySelector(".likes")
+    // const likesBlock = document.querySelector(".likes")
     // token ? attachLikeHandler() : likesBlock;
   
     
-buttonDisabled();
+
     
 };
 

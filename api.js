@@ -1,11 +1,14 @@
 const host = "https://wedev-api.sky.pro/api/v1/yana-orlova/comments";
 const userHost = "https://wedev-api.sky.pro/api/user/login";
 const userHostReg =  "https://wedev-api.sky.pro/api/user";
-export let token;
+
+let token;
 export const setToken = (newToken) => {
     token = newToken;
 }
-
+export const getToken = () => {
+    return token;
+}
 
 export function getTodos() {
 

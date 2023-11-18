@@ -8,14 +8,7 @@ export let commentsData = [];
 function setComments(newComments) {
 commentsData = newComments;
 }
-export let token = "";
-function setToken(newToken) {
-token = newToken;
-}
-function getToken() {
-    return `Bearer ${token}`
-   
-    }
+
     
     
 // const nameInputElement = document.getElementById("name-input");
