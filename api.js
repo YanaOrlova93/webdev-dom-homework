@@ -111,13 +111,10 @@ export function userRegistration({ login, name, password }) {
     })
 }
 export function toggleLike(id) {
-    fetch(`${host}/${id}/toggle-like`, {
+    return fetch(`${host}/${id}/toggle-like`, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token}`,
         },
-        
-    })
-    
-}
-
+    }).then()
+}  
