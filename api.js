@@ -1,8 +1,9 @@
-const host = "https://wedev-api.sky.pro/api/v1/yana-orlova/comments";
+const host = "https://wedev-api.sky.pro/api/v2/yana-orlova/comments";
 const userHost = "https://wedev-api.sky.pro/api/user/login";
 const userHostReg =  "https://wedev-api.sky.pro/api/user";
 
 let token;
+
 export const setToken = (newToken) => {
     token = newToken;
 }
@@ -109,3 +110,14 @@ export function userRegistration({ login, name, password }) {
 
     })
 }
+export function toggleLike(id) {
+    fetch(`${host}/${id}/toggle-like`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        
+    })
+    
+}
+

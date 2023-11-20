@@ -1,5 +1,4 @@
 import { getTodos, postTodo } from "./api.js";
-import { answerComments, attachLikeHandler } from "./eventListeners.js";
 import { renderComments } from "./renderMain.js";
 import { addCommentValidation } from "./validation.js";
 
@@ -56,13 +55,13 @@ getTodos().then((responseData) => {
 
 console.log(appComments)
     commentsData = appComments;
-    renderComments({commentsData});
+    renderComments();
 })
-    .then((dataResponse) => {
-        const loaderComment = document.getElementById("loader-comment");
-        console.log("data",dataResponse);
-        loaderComment.style.display = "none";
-    })
+    // .then((dataResponse) => {
+    //     const loaderComment = document.getElementById("loader-comment");
+    //     console.log("data",dataResponse);
+    //     loaderComment.style.display = "none";
+    // })
 .catch((error) => {
     if (error.message === 'Failed to fetch') {
                 alert ('У вас неполадки с интернетом');

@@ -1,10 +1,11 @@
 import { getToken} from "./api.js";
-import { answerComments, attachLikeHandler } from "./eventListeners.js";
-import { addComment, pressEnter } from "./main.js";
+import { attachLikeHandler } from "./eventListeners.js";
+
+import { addComment, commentsData, pressEnter } from "./main.js";
 import { renderLogin } from "./renderLogin.js";
 import { buttonDisabled } from "./validation.js";
 
-export function renderComments({commentsData}) {
+export function renderComments() {
     
     
     const allCommentsHtml = commentsData.map((comment, index) => {
@@ -32,13 +33,11 @@ export function renderComments({commentsData}) {
 
 
     const appHtml =  `
-    <div id="loader-comment">Комментарии загружаются...</div>
+    
      <ul id="list" class="comments">
       ${allCommentsHtml}
     </ul>
     <div id="add-loader-comment">Комментарий добавляется...</div>
-
-
     ${getToken() && `<div class="add-form" id="id-form">
         <input
                 type="text" id="name-input"
@@ -62,6 +61,10 @@ export function renderComments({commentsData}) {
     `
 
     appElement.innerHTML = appHtml;
+
+
+        document.getElementById('add-loader-comment').style.display='none'
+       
 
    
     // const listElement = document.getElementById("list");
@@ -96,6 +99,7 @@ export function renderComments({commentsData}) {
         buttonLogin.addEventListener('click', () => renderLogin({ renderComments }));
     }
     else {
+        const blockWithForms = document.querySelector(".add-form");
         const nameInputElement = document.getElementById("name-input");
         const commInputElement = document.getElementById("comm-input");
         const buttonElement = document.getElementById("publish-button");
@@ -106,16 +110,10 @@ export function renderComments({commentsData}) {
         nameInputElement.value = window.localStorage.getItem("userName");
         nameInputElement.disabled = true;
         buttonDisabled();
-
+        attachLikeHandler()
     }
 
     
-  
-    // const likesBlock = document.querySelector(".likes")
-    // token ? attachLikeHandler() : likesBlock;
-  
-    
-
     
 };
 
