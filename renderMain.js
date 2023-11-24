@@ -65,11 +65,6 @@ export function renderComments() {
 
         document.getElementById('add-loader-comment').style.display='none'
        
-
-   
-  
-
-
     
     if (!getToken() ) {
         const buttonLogin = document.querySelector(".avtorization-button");

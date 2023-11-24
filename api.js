@@ -12,27 +12,26 @@ export const getToken = () => {
 }
 
 export function getTodos() {
+    return fetch(host, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
 
-return fetch(host, {
-    method: "GET",
-    headers: {
-        Authorization: `Bearer ${token}`,
-    },
-})
-
-.then((response) => {
-    return response.json();
-})
-.catch((error) => {
-    if (error.message === 'Failed to fetch') {
-        throw new Error("нет интернета");
-    }
-    console.warn(error);
-});
+    .then((response) => {
+        return response.json();
+    })
+    .catch((error) => {
+        if (error.message === 'Failed to fetch') {
+            throw new Error("нет интернета");
+        }
+        console.warn(error);
+    });
 }
 
 export function postTodo(postData) {
-return fetch(host, {
+    return fetch(host, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token}`,
@@ -110,6 +109,7 @@ export function userRegistration({ login, name, password }) {
 
     })
 }
+
 export function toggleLike(id) {
     return fetch(`${host}/${id}/toggle-like`, {
         method: "POST",
