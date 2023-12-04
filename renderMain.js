@@ -7,7 +7,6 @@ import { buttonDisabled } from "./validation.js";
 
 export function renderComments() {
     
-    
     const allCommentsHtml = commentsData.map((comment, index) => {
         return `<li class="comment">
         <div class="comment-header">

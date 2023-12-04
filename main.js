@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { getTodos, postTodo } from "./api.js";
 import { renderComments } from "./renderMain.js";
 import { addCommentValidation } from "./validation.js";
@@ -19,7 +20,9 @@ getTodos().then((responseData) => {
             id: comment.id,
             name: comment.author.name,
             text: comment.text,
-            date: new Date(comment.date).toLocaleDateString() + " " + (new Date(comment.date).getHours() < 10 ? '0' + new Date(comment.date).getHours() : new Date(comment.date).getHours()) + ":" + (new Date(comment.date).getMinutes() < 10 ? '0' + new Date(comment.date).getMinutes() : new Date(comment.date).getMinutes()) + ":" + (new Date(comment.date).getSeconds() < 10 ? '0' + new Date(comment.date).getSeconds() : new Date(comment.date).getSeconds()),
+            date: format((new Date(comment.date)), 'yyyy-MM-dd hh.mm.ss'),
+            
+            // new Date(comment.date).toLocaleDateString() + " " + (new Date(comment.date).getHours() < 10 ? '0' + new Date(comment.date).getHours() : new Date(comment.date).getHours()) + ":" + (new Date(comment.date).getMinutes() < 10 ? '0' + new Date(comment.date).getMinutes() : new Date(comment.date).getMinutes()) + ":" + (new Date(comment.date).getSeconds() < 10 ? '0' + new Date(comment.date).getSeconds() : new Date(comment.date).getSeconds()),
             likes: comment.likes,
             isLike: comment.isLiked,
         };
@@ -93,12 +96,12 @@ commentsData.push({
   
 
        
-.catch((error) => {
-    blockWithForms.classList.remove('hidden');
-    formInput.textContent = "";
-    console.warn(error);
-  });
-};
+  .catch((error) => {
+      blockWithForms.classList.remove('hidden');
+      formInput.textContent = "";
+      console.warn(error);
+    });
+  };
 
 export const pressEnter = (event) => {
     if (event.code === "Enter") {
